@@ -15,11 +15,13 @@ class GameScene: SKScene {
     var paddle = SKSpriteNode()
     var brick = SKSpriteNode()
     
+    
     override func didMove(to view: SKView) {
         createBackground()
         makeBall()
         makePaddle()
         makeBrick()
+        makeLoseZone()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -33,15 +35,15 @@ class GameScene: SKScene {
     func createBackground(){
         let stars = SKTexture(imageNamed: "stars")
         for i in 0...1{
-            let starsBackrgound = SKSpriteNode(texture: stars)
-            starsBackrgound.zPosition = -1
-            starsBackrgound.position = CGPoint(x: 0, y: starsBackrgound.size.height * CGFloat (i))
-            addChild(starsBackrgound)
-            let moveDown = SKAction.moveBy(x: 0, y: -starsBackrgound.size.height, duration: 20)
-            let moveReset = SKAction.moveBy(x: 0, y: starsBackrgound.size.height, duration: 0)
+            let starsBackground = SKSpriteNode(texture: stars)
+            starsBackground.zPosition = -1
+            starsBackground.position = CGPoint(x: 0, y: starsBackground.size.height * CGFloat (i))
+            addChild(starsBackground)
+            let moveDown = SKAction.moveBy(x: 0, y: -starsBackground.size.height, duration: 20)
+            let moveReset = SKAction.moveBy(x: 0, y: starsBackground.size.height, duration: 0)
             let moveLoop = SKAction.sequence([moveDown, moveReset])
             let moveForever = SKAction.repeatForever(moveLoop)
-            starsBackrgound.run(moveForever)
+            starsBackground.run(moveForever)
         }
     }
     
@@ -88,6 +90,20 @@ class GameScene: SKScene {
         addChild(brick)
     }
     
+    func makeLoseZone(){
+        let loseZone = SKSpriteNode(color: UIColor.red, size: CGSize(width: frame.width, height: 50))
+        loseZone.position = CGPoint(x: frame.midX, y: frame.minY + 25)
+        loseZone.name = "loseZone"
+        loseZone.physicsBody = SKPhysicsBody(rectangleOf: loseZone.size)
+        loseZone.physicsBody?.isDynamic = false
+        addChild(loseZone)
+    }
     
     
+    
+    
+    
+    
+    
+ 
    }
